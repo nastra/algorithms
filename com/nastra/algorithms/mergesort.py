@@ -1,5 +1,18 @@
 '''
-Created on Jan 30, 2013
+This module implements the Mergesort algorithm. Mergesort uses the 
+Divide-and-Conquer approach, consisting of the following parts:
+- Divide: divide the problem into smaller subproblems
+- Conquer: conquer the two subproblems using recursive calls
+- Combine: combine the solution of the subproblems into one for the original problem
+
+The worst-case running time of the algorithm is O(n log n) for an input size n, consisting of the following parts:
+- dividing problem into subproblems runs in log n, because each time the input is divided by 2
+- merging takes linear time, since we have to visit each element exactly once
+
+Mergesort is a stable sorting algorithm, meaning that the relative order of records with equal keys is maintained. 
+
+We reach a worst-case running time of O(n log n) with the current implementation. However, the space efficiency 
+is not optimal and could be improved by avoiding the creation of too many sublists.
 
 @author: nastra - Eduard Tudenhoefner
 '''
