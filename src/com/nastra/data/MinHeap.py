@@ -3,20 +3,19 @@ Implements a Binary Min Heap
 
 @author: nastra - Eduard Tudenhoefner
 '''
+import math
 
 class MinHeap(object):
 
-    def __init__(self, heapArray):
+    def __init__(self, heapArray=[]):
         self.heap = heapArray
         if len(heapArray) > 0:
             self.buildMinHeap()
         
     def getParent(self, index):
-        """
-        Parent will be at math.floor(index/2). Since integer division
-        simulates the floor function, we don't explicitly use it
-        """
-        return index // 2
+        if index == 0:
+            return 0
+        return math.ceil(index / 2) - 1
     
     def getLeft(self, index):
         return 2 * index + 1
@@ -43,8 +42,14 @@ class MinHeap(object):
             self.heapify(smallest)
         
     def insert(self, element):
+        '''
+        Insert a new elements into the heap. Running time is O(log n).
+        '''
         self.heap.append(element)
         index = len(self.heap) - 1
+        self.siftUp(index)
+            
+    def siftUp(self, index):
         while index != 0 and self.heap[self.getParent(index)] > self.heap[index]:
             self.heap[index], self.heap[self.getParent(index)] = self.heap[self.getParent(index)], self.heap[index]
             index = self.getParent(index)
@@ -67,6 +72,9 @@ class MinHeap(object):
         return self.heap[0]
     
     def buildMinHeap(self):
+        '''
+        Builds up the min heap. Running time is O(n).
+        '''
         for i in range(int(len(self.heap) / 2), -1, -1):
             self.heapify(i)
             
@@ -81,11 +89,3 @@ class MinHeap(object):
         output.append(self.heap.pop())
         self.heap = output
         return output
-        
-        
-if __name__ == '__main__':
-    heapArray = [15, 13, 9, 5, 12, 8, 7, 4, 0, 6, 2, 1]
-    minHeap = MinHeap(heapArray)
-    print(minHeap.heap)
-    for i in range(0, len(heapArray)):
-        print(minHeap.extractMin())
