@@ -8,14 +8,15 @@ class MinHeap(object):
 
     def __init__(self, heapArray):
         self.heap = heapArray
-        self.buildMinHeap()
+        if len(heapArray) > 0:
+            self.buildMinHeap()
         
     def getParent(self, index):
         """
         Parent will be at math.floor(index/2). Since integer division
         simulates the floor function, we don't explicitly use it
         """
-        return index / 2
+        return index // 2
     
     def getLeft(self, index):
         return 2 * index + 1
@@ -31,7 +32,7 @@ class MinHeap(object):
         rightIndex = self.getRight(index)
         smallest = index
         heapSize = len(self.heap)
-        0
+        
         if leftIndex < heapSize and self.heap[leftIndex] < self.heap[index]:
             smallest = leftIndex
         if rightIndex < heapSize and self.heap[rightIndex] < self.heap[smallest]:
@@ -43,10 +44,11 @@ class MinHeap(object):
         
     def insert(self, element):
         self.heap.append(element)
-        lastElementIndex = len(self.heap) - 1
-        self.heap[0], self.heap[lastElementIndex] = self.heap[lastElementIndex], self.heap[0]
-        self.heapify(0)
-        
+        index = len(self.heap) - 1
+        while index != 0 and self.heap[self.getParent(index)] > self.heap[index]:
+            self.heap[index], self.heap[self.getParent(index)] = self.heap[self.getParent(index)], self.heap[index]
+            index = self.getParent(index)
+
     def extractMin(self):
         '''
         Retrieves and removes the minimum element from the heap. Runs in time O(log n).
@@ -87,8 +89,3 @@ if __name__ == '__main__':
     print(minHeap.heap)
     for i in range(0, len(heapArray)):
         print(minHeap.extractMin())
-        
-        
-    
-    
-    
