@@ -1,60 +1,66 @@
 '''
 This is an implementation of a max heap sorting algorithm.
 
-@author: nastra
+@author: nastra - Eduard Tudenhoefner
 '''
-
-import math
-heapSize = 0
-
-def get_parent(i):
-    if i == 0:
-        return 0
-    return math.ceil(i / 2) - 1
-
-def get_left(i):
-    return 2 * i + 1
-
-def get_right(i):
-    return 2 * i + 2
-
-def build_max_heap(array):
-    global heapSize
-    heapSize = len(array)
+class MaxHeap:
+    def __init__(self, heap):
+        self.heap = heap
+     
+    def parent(self, index):
+        return index / 2
+     
+    def left_child(self, index):
+        return 2 * index + 1
+     
+    def right_child(self, index):
+        return 2 * index + 2
     
-    for i in range(int(heapSize / 2), 0, -1):
-        max_heapify(array, i)
-    
+    def max_heapify(self, index):
+        """
+        Responsible for maintaining the heap property of the heap. Running time is O(log n)
+        """
+        left_index = self.left_child(index)
+        right_index = self.right_child(index)
+         
+        largest = index
+        if left_index < len(self.heap) and self.heap[left_index] > self.heap[index]:
+            largest = left_index
+        if right_index < len(self.heap) and self.heap[right_index] > self.heap[largest]:
+            largest = right_index
+         
+        if largest != index:
+            self.heap[index], self.heap[largest] = self.heap[largest], self.heap[index]
+            self.max_heapify(largest)
 
-def max_heapify(array, i):
-    left = get_left(i)
-    right = get_right(i)
-    largest = i
-
-    if left < heapSize and array[left] > array[i]:
-        largest = left
-        
-    if right < heapSize and array[right] > array[largest]:
-        largest = right
-    
-    if largest != i:
-        array[i], array[largest] = array[largest], array[i]
-        max_heapify(array, largest)
-
-def heapsort(array):
-    build_max_heap(array)
-    counter = len(array) - 1
-    while counter > 0:
-        array[counter], array[0] = array[0], array[counter]
-        max_heapify(array, 0)
-        counter = counter - 1
-    
-
+    def build_max_heap(self):
+        """
+        Responsible for building the heap bottom up. It starts with the lowest non-leaf nodes
+        and calls heapify on them. This function is useful for initialising a heap with an
+        unordered array. Running time is O(n)
+        """
+        for i in range(int(len(self.heap) / 2), -1, -1):
+            self.max_heapify(i)
+            
+    def extract_max(self):
+        maxElement = self.heap.pop(0)
+        self.max_heapify(0)
+        return maxElement
+            
+    def heapsort(self):
+        """ The heap-sort algorithm with a time complexity O(n log n) """
+        self.build_max_heap()
+        output = []
+        for i in range(len(self.heap) - 1, 0, -1):
+            self.heap[0], self.heap[i] = self.heap[i], self.heap[0]
+            output.append(self.heap.pop())
+            self.max_heapify(0)
+        output.append(self.heap.pop())
+        self.heap = output
+        return output
 
 if __name__ == '__main__':
-    # array = [4, 2, 9, 31, 66, 46, 99, 105, 32, 14, 50]
-    ''' we give an array as input that represents a heap data structure. 
-    In general, a heap data structure is an almost complete binary tree (tree that is completely filled on all levels, except maybe at the lowest level).'''
-    array = [2, 7, 9, 4, 15, 3]
-    heapsort(array)
-    print(array)
+    input = [1, 4, 7, 44, 67, 234, 9, 66, 123, 88, 54, 34]
+    heap = MaxHeap(input)
+    output = heap.heapsort()
+    print(output)
