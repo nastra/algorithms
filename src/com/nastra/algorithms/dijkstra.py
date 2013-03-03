@@ -22,10 +22,10 @@ class Dijkstra(object):
         
     def findShortestPaths(self, graph, startNode):
         self.__initSingleSource(graph, startNode)
-        self.minQueue.insert((startNode, self.shortestPathTo[startNode]))
+        self.minQueue.insert((self.shortestPathTo[startNode], startNode))
         
         while not self.minQueue.empty():
-            node, dist = self.minQueue.extractMin()
+            dist, node = self.minQueue.extractMin()
             self.__relaxation(graph, node)
         return self.shortestPathTo, self.edgeTo
             
@@ -38,9 +38,9 @@ class Dijkstra(object):
                 self.edgeTo[adjacentNode] = node
                 
                 if self.minQueue.contains(adjacentNode):
-                    self.minQueue.decreaseKey(adjacentNode, self.shortestPathTo[adjacentNode])
+                    self.minQueue.decreaseKey(self.shortestPathTo[adjacentNode], adjacentNode)
                 else:
-                    self.minQueue.insert((adjacentNode, self.shortestPathTo[adjacentNode]))
+                    self.minQueue.insert((self.shortestPathTo[adjacentNode], adjacentNode))
         
 
 def readGraphFromFile(filename):
