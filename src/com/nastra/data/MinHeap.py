@@ -1,5 +1,5 @@
 '''
-Implements a Binary Min Heap
+Implements a Binary Min Heap including a heapsort algorithm.
 
 @author: nastra - Eduard Tudenhoefner
 '''
@@ -12,23 +12,23 @@ class MinHeap(object):
         if len(heapArray) > 0:
             self.buildMinHeap()
         
-    def getParent(self, index):
+    def parent(self, index):
         if index == 0:
             return 0
         return math.ceil(index / 2) - 1
     
-    def getLeft(self, index):
+    def leftChild(self, index):
         return 2 * index + 1
     
-    def getRight(self, index):
+    def rightChild(self, index):
         return 2 * index + 2
     
     def heapify(self, index):
         '''
         This function is mainly responsible for maintaining the heap property. Runs in time O(log n).
         '''
-        leftIndex = self.getLeft(index)
-        rightIndex = self.getRight(index)
+        leftIndex = self.leftChild(index)
+        rightIndex = self.rightChild(index)
         smallest = index
         heapSize = len(self.heap)
         
@@ -50,9 +50,9 @@ class MinHeap(object):
         self.siftUp(index)
             
     def siftUp(self, index):
-        while index != 0 and self.heap[self.getParent(index)] > self.heap[index]:
-            self.heap[index], self.heap[self.getParent(index)] = self.heap[self.getParent(index)], self.heap[index]
-            index = self.getParent(index)
+        while index != 0 and self.heap[self.parent(index)] > self.heap[index]:
+            self.heap[index], self.heap[self.parent(index)] = self.heap[self.parent(index)], self.heap[index]
+            index = self.parent(index)
 
     def extractMin(self):
         '''
