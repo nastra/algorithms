@@ -77,6 +77,9 @@ class MaxHeap(object):
             self.heap[index], self.heap[self.parent(index)] = self.heap[self.parent(index)], self.heap[index]
             index = self.parent(index)
             
+    def size(self):
+        return len(self.heap)
+            
     def heapsort(self):
         """ The heap-sort algorithm with a time complexity O(n log n) """
         self.buildMaxHeap()

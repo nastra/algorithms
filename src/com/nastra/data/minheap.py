@@ -77,6 +77,9 @@ class MinHeap(object):
         '''
         for i in range(int(len(self.heap) / 2), -1, -1):
             self.heapify(i)
+    
+    def size(self):
+        return len(self.heap)
             
     def heapsort(self):
         """ The heap-sort algorithm with a time complexity O(n log n) """
