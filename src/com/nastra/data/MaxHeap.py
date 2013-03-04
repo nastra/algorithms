@@ -4,7 +4,7 @@ This is an implementation of a Binary Max Heap including the heapsort algorithm.
 @author: nastra - Eduard Tudenhoefner
 '''
 import math
-class MaxHeap:
+class MaxHeap(object):
     def __init__(self, heapArray=[]):
         self.heap = heapArray
         if len(heapArray) > 0:
@@ -63,6 +63,19 @@ class MaxHeap:
         Retrieves the maximum element from the heap. Runs in time O(1).
         '''
         return self.heap[0]
+    
+    def insert(self, element):
+        '''
+        Insert a new elements into the heap. Running time is O(log n).
+        '''
+        self.heap.append(element)
+        index = len(self.heap) - 1
+        self.siftUp(index)
+    
+    def siftUp(self, index):
+        while index != 0 and self.heap[self.parent(index)] < self.heap[index]:
+            self.heap[index], self.heap[self.parent(index)] = self.heap[self.parent(index)], self.heap[index]
+            index = self.parent(index)
             
     def heapsort(self):
         """ The heap-sort algorithm with a time complexity O(n log n) """
@@ -75,3 +88,4 @@ class MaxHeap:
         output.append(self.heap.pop())
         self.heap = output
         return output
+    
