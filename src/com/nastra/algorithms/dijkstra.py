@@ -6,7 +6,7 @@ in the graph.
 
 @author: nastra - Eduard Tudenhoefner
 '''
-from com.nastra.data.MinPriorityQueue import MinPriorityQueue
+from com.nastra.data.queue import MinPriorityQueue
 
 class Dijkstra(object):
     def __init__(self):

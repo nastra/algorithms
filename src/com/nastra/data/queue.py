@@ -3,7 +3,7 @@ Implements a min priority queue based on a binary min heap
 
 @author: nastra - Eduard Tudenhoefner
 '''
-from com.nastra.data.MinHeap import MinHeap
+from com.nastra.data.minheap import MinHeap
 
 class MinPriorityQueue(object):
 

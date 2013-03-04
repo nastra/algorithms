@@ -19,7 +19,7 @@ and i/(K+i) chance that it wont be.
 '''
 from random import randint
 
-class Sampler:
+class Sampler(object):
     def __init__(self, maxSamples=30):  # maxSamples set to 30 by default for better console output
         self.samples = []
         self.counter = 0
@@ -36,6 +36,20 @@ class Sampler:
                 self.samples[index] = sample
                 
         self.counter = self.counter + 1
+    
+if __name__ == '__main__':
+    import random
+    maxRange = 1000000
+    container = [random.randint(0, 1000) for i in range(0, maxRange)]
+    i = 0
+    sampler = Sampler()
+    for s in container:
+        # index = random.randint(0, maxRange)  # pick a randomly chosen sample from the list
+        sampler.sample(s)
+        i += 1
+        if i % int(100):
+            print(sampler.samples)
+
     
     
     
