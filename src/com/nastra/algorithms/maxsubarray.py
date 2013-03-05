@@ -1,6 +1,6 @@
 '''
 Solution to the maximum subarray problem.
-@author: nastra
+@author: nastra - Eduard Tudenhoefner
 '''
 import sys
 import math
