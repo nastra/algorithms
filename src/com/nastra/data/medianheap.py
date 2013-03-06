@@ -19,9 +19,21 @@ class MedianHeap(object):
         If we have even elements, then the median of the left part is returned. 
         If either side has one more element, then we return the median from this side.
         '''
-        leftSize = self.left.size()
-        rightSize = self.right.size()
-        if self.__evenSize() or (leftSize > rightSize):
+        if self.__evenSize() or (self.__leftIsLarger()):
+            return self.left.getMax()
+        
+        return self.right.getMin()
+    
+    def getMedianAlternative(self):
+        '''
+        Retrieves and returns the median element. Runs in time O(1).
+        If we have even elements, then the median of the left part and the right part is taken and divided by 2. 
+        If either side has one more element, then we return the median from this side.
+        '''
+        if self.__evenSize():
+            return (self.left.getMax() + self.right.getMin()) / 2
+        
+        if self.__leftIsLarger():
             return self.left.getMax()
         
         return self.right.getMin()
@@ -30,7 +42,7 @@ class MedianHeap(object):
     def insert(self, element):
         if self.left.size() == 0:
             self.left.insert(element)
-        if element <= self.left.getMax():
+        elif element <= self.left.getMax():
             self.left.insert(element)
         else:
             self.right.insert(element)
@@ -41,8 +53,8 @@ class MedianHeap(object):
         '''
         We re-balance in case one side gets off by 2 elements. Runs in time O(log n).
         '''
-        leftSize = len(self.left.heap)
-        rightSize = len(self.right.heap)
+        leftSize = self.left.size()
+        rightSize = self.right.size()
         if leftSize == rightSize + 2:
             self.right.insert(self.left.extractMax())
         elif rightSize == leftSize + 2:
@@ -53,4 +65,10 @@ class MedianHeap(object):
         Returns True if we have an even length.
         '''
         return (self.left.size() + self.right.size()) % 2 == 0
+    
+    def __leftIsLarger(self):
+        ''' 
+        Returns True if the left size is larger than the right side.
+        '''
+        return self.left.size() > self.right.size()
     
